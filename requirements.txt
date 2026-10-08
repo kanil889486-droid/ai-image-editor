@@ -1,0 +1,7 @@
+Flask>=3.0
+Pillow>=10.4
+numpy>=1.26
+# Optional (AI background removal). Uncomment to enable:
+# rembg
+# onnxruntime
+gunicorn

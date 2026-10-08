@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Image Editor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header><h1>AI Image Editor</h1>
+    <div class="actions">
+      <input type="file" id="file" accept="image/*" hidden>
+      <button id="open">Open image</button>
+      <button id="reset" disabled>Reset</button>
+      <select id="format"><option value="png">PNG</option><option value="jpeg">JPEG</option></select>
+      <button id="download" class="primary" disabled>Download</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="stage">
+      <div id="drop">Drop an image here or click “Open image”</div>
+      <img id="preview" alt="Preview" hidden>
+      <div id="busy" hidden>Processing…</div>
+    </section>
+
+    <aside id="panel">
+      <h2>AI tools</h2>
+      <label class="check"><input type="checkbox" id="auto_enhance"> Auto enhance</label>
+      <label class="check"><input type="checkbox" id="remove_bg" {% if not has_rembg %}disabled{% endif %}>
+        Remove background {% if not has_rembg %}<small>(install rembg to enable)</small>{% endif %}</label>
+
+      <h2>Adjust</h2>
+      <label>Brightness <input type="range" id="brightness" min="0" max="200" value="100"></label>
+      <label>Contrast <input type="range" id="contrast" min="0" max="200" value="100"></label>
+      <label>Saturation <input type="range" id="saturation" min="0" max="200" value="100"></label>
+      <label>Sharpness <input type="range" id="sharpness" min="0" max="300" value="100"></label>
+      <label>Blur <input type="range" id="blur" min="0" max="20" value="0"></label>
+      <label>Scale % <input type="range" id="scale" min="10" max="200" value="100"></label>
+
+      <h2>Filter</h2>
+      <select id="filter">
+        <option value="none">None</option><option>grayscale</option><option>sepia</option>
+        <option>invert</option><option>edges</option><option>emboss</option><option>sketch</option>
+      </select>
+
+      <h2>Transform</h2>
+      <div class="row">
+        <button id="rotL">⟲ 90°</button><button id="rotR">⟳ 90°</button>
+        <button id="flipH">Flip H</button><button id="flipV">Flip V</button>
+      </div>
+
+      <h2>Crop (% of image)</h2>
+      <div class="grid">
+        <label>X <input type="number" id="cx" min="0" max="99" value="0"></label>
+        <label>Y <input type="number" id="cy" min="0" max="99" value="0"></label>
+        <label>W <input type="number" id="cw" min="1" max="100" value="100"></label>
+        <label>H <input type="number" id="ch" min="1" max="100" value="100"></label>
+      </div>
+    </aside>
+  </main>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
